@@ -1,56 +1,81 @@
 ---
-title: Welcome to Evidence
+title: Home
+sidebar_position: 1
+queries:
+  - population: population.sql
 ---
 
-<Details title='How to edit this page'>
 
-  This page can be found in your project at `/pages/index.md`. Make a change to the markdown file and save it to see the change take effect in your browser.
-</Details>
 
-```sql categories
-  select
-      category
-  from needful_things.orders
-  group by category
+
+
+```sql total_world_population
+    select 
+        sum(population) as total_population,
+        year_date
+    from ${population}
+    where year_date = (select max(year_date) from ${population})
+    group by year_date
 ```
 
-<Dropdown data={categories} name=category value=category>
-    <DropdownOption value="%" valueLabel="All Categories"/>
-</Dropdown>
+## World Population at <Value data={total_world_population} value=year_date fmt="YYYY" />
 
-<Dropdown name=year>
-    <DropdownOption value=% valueLabel="All Years"/>
-    <DropdownOption value=2019/>
-    <DropdownOption value=2020/>
-    <DropdownOption value=2021/>
-</Dropdown>
+<BigValue
+  title="Total World Population"
+  data={total_world_population}
+  value=total_population
+  fmt=num2b
+  
+/>
 
-```sql orders_by_category
-  select 
-      date_trunc('month', order_datetime) as month,
-      sum(sales) as sales_usd,
-      category
-  from needful_things.orders
-  where category like '${inputs.category.value}'
-  and date_part('year', order_datetime) like '${inputs.year.value}'
-  group by all
-  order by sales_usd desc
+## Population map for <Value data={total_world_population} value=year_date fmt="YYYY" />
+
+```sql all_countries_latest
+    select 
+        country_name,
+        country_code,
+        population
+    from ${population}
+    where year_date = (select max(year_date) from ${population})
+```
+
+<AreaMap 
+    data={all_countries_latest} 
+    areaCol=country_code
+    geoJsonUrl='https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson'
+    geoId=iso_a2
+    value=population
+    valueFmt=num0
+    height=500
+    tooltip={[
+        {id: 'country_name', fmt: 'id', showColumnName: false, valueClass: 'text-xl font-semibold'},
+        {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
+        {id: 'population', fmt: 'num0', fieldClass: 'text-[grey]', valueClass: 'text-[green]'}
+    ]}
+/>
+
+## Top 10 most populous countries in <Value data={total_world_population} value=year_date fmt="YYYY" />
+
+```sql top10
+    select 
+        country_name,
+        population
+    from ${population}
+    where year_date = (select max(year_date) from ${population})
+    order by population desc
+    limit 10
 ```
 
 <BarChart
-    data={orders_by_category}
-    title="Sales by Month, {inputs.category.label}"
-    x=month
-    y=sales_usd
-    series=category
-/>
-
-## What's Next?
-- [Connect your data sources](settings)
-- Edit/add markdown files in the `pages` folder
-- Deploy your project with [Evidence Cloud](https://evidence.dev/cloud)
-
-## Get Support
-- Message us on [Slack](https://slack.evidence.dev/)
-- Read the [Docs](https://docs.evidence.dev/)
-- Open an issue on [Github](https://github.com/evidence-dev/evidence)
+  title="Top 10 Most Populous Countries"
+  x=country_name
+  y=population
+  data={top10}
+  sortBy=y
+  sortOrder=desc
+  limit=10
+  xAxisTitle="Country"
+  yAxisTitle="Population"
+  yAxisFormat=","
+  height=400
+  />
