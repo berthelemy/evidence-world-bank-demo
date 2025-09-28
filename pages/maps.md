@@ -1,6 +1,7 @@
 ---
 title: Maps
 sidebar_position: 5
+hide_toc: true
 queries:
   - services: services.sql
   - population: population.sql
@@ -50,6 +51,9 @@ select
 from ${current_country_data}
 where region like '${inputs.region_picker}'
 ```
+
+Data as at <Value data={current_country_data_filtered} column=year_date />.
+
 <Grid cols=2>
 
 <AreaMap 
@@ -93,12 +97,12 @@ where region like '${inputs.region_picker}'
     geoJsonUrl='https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson'
     geoId=iso_a2
     value=internet_users
-    valueFmt=pct
+    valueFmt=num
     height=250
     tooltip={[
         {id: 'country_name', fmt: 'id', showColumnName: false, valueClass: 'text-xl font-semibold'},
         {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
-        {id: 'internet_users', fmt: 'pct', fieldClass: 'text-[grey]', valueClass: 'text-[green]'}
+        {id: 'internet_users', fmt: 'num', fieldClass: 'text-[grey]', valueClass: 'text-[green]'}
         
     ]}
 />
