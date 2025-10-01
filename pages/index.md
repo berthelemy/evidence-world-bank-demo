@@ -1,5 +1,5 @@
 ---
-title: Home
+title: World bank data demo using Evidence
 sidebar_position: 1
 og:
   image: /map-of-the-world-2401458_1280.jpg
