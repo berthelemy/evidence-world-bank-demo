@@ -22,7 +22,7 @@ select
     p.population as population
 from ${services} as s
 join ${population} as p on p.country_code = s.country_code and p.year_date = s.year_date
-where s.year_date = (select max(year_date) from ${services}) 
+where s.year_date = (select max(year_date) from ${services} where access_to_electricity !=0) 
 order by s.country_name, s.year_date DESC
 ```
 
@@ -97,6 +97,23 @@ Data as at <Value data={current_country_data_filtered} column=year_date />.
 />
 
 <AreaMap 
+    data={density_large} 
+    title="Population Density (per km2)"
+    areaCol=country_code
+    geoJsonUrl='https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson'
+    geoId=iso_a2
+    value=population_density
+    valueFmt=num0k
+    height=250
+    tooltip={[
+        {id: 'country_name', fmt: 'id', showColumnName: false, valueClass: 'text-xl font-semibold'},
+        {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
+        {id: 'population', fmt: 'num2m', fieldClass: 'text-[grey]', valueClass: 'text-[green]'},
+        {id: 'population_density', title: 'Population Density (/km2)', fmt: 'num0', fieldClass: 'text-[grey]', valueClass: 'text-[green]'},
+    ]}
+/>
+
+<AreaMap 
     data={current_country_data_filtered} 
     title="Access to electricity"
     areaCol=country_code
@@ -130,22 +147,7 @@ Data as at <Value data={current_country_data_filtered} column=year_date />.
     ]}
 />
 
-<AreaMap 
-    data={density_large} 
-    title="Population Density (per km2)"
-    areaCol=country_code
-    geoJsonUrl='https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson'
-    geoId=iso_a2
-    value=population_density
-    valueFmt=num0k
-    height=250
-    tooltip={[
-        {id: 'country_name', fmt: 'id', showColumnName: false, valueClass: 'text-xl font-semibold'},
-        {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
-        {id: 'population', fmt: 'num2m', fieldClass: 'text-[grey]', valueClass: 'text-[green]'},
-        {id: 'population_density', title: 'Population Density (/km2)', fmt: 'num0', fieldClass: 'text-[grey]', valueClass: 'text-[green]'},
-    ]}
-/>
+
 
 </Grid>
 
