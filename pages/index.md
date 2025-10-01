@@ -1,15 +1,21 @@
 ---
 title: Home
 sidebar_position: 1
-
+og:
+  image: /map-of-the-world-2401458_1280.jpg
 ---
+![Map of the world](/map-of-the-world-2401458_1280.jpg)
 
+<Note>
+    Image by Yuri on Pixabay
+</Note>
 
 This is a demonstration site, illustrating how to use the [Evidence](https://evidence.dev) visualisation platform to build data portals.
 
 The data is sourced from the [World Bank Open Data](https://data.worldbank.org/) platform.
 
 The charts connect together World Bank datasets on countries, population, access to electricity and internet users.
+
 
 ## Technical details
 
