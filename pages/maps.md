@@ -110,3 +110,7 @@ Data as at <Value data={current_country_data_filtered} column=year_date />.
 />
 
 </Grid>
+
+<LinkButton url='./'>
+  Return to home page
+</LinkButton>

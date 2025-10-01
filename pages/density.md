@@ -45,7 +45,7 @@ WHERE population_density < 1200
     geoId=iso_a2
     value=population_density
     valueFmt=num0k
-    height=500
+    height=400
     tooltip={[
         {id: 'country_name', fmt: 'id', showColumnName: false, valueClass: 'text-xl font-semibold'},
         {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
@@ -66,7 +66,7 @@ This separate map shows just the tiny countries, which are excluded from the mai
     geoId=iso_a2
     value=population_density
     valueFmt=num0k
-    height=500
+    height=400
     tooltip={[
         {id: 'country_name', fmt: 'id', showColumnName: false, valueClass: 'text-xl font-semibold'},
         {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
@@ -120,3 +120,7 @@ This separate map shows just the tiny countries, which are excluded from the mai
   yAxisFormat="num0"
   height=400
     />
+
+<LinkButton url='services'>
+  Next page: Access to services
+</LinkButton>

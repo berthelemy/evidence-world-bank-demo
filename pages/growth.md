@@ -95,3 +95,6 @@ ORDER BY
   height=400
   />
   
+<LinkButton url='density'>
+  Next page: Global population density
+</LinkButton>

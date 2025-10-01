@@ -80,3 +80,6 @@ order by year_date, region
     height=600
     />
 
+<LinkButton url='maps'>
+  Next page: Comparison maps
+</LinkButton>

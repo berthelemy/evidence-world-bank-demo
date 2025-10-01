@@ -42,7 +42,7 @@ queries:
     geoId=iso_a2
     value=population
     valueFmt=num0
-    height=500
+    height=400
     tooltip={[
         {id: 'country_name', fmt: 'id', showColumnName: false, valueClass: 'text-xl font-semibold'},
         {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
@@ -101,3 +101,7 @@ queries:
   yAxisFormat=","
   height=400
   />
+
+  <LinkButton url='growth'>
+  Next page: Population growth
+</LinkButton>

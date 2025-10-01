@@ -30,3 +30,7 @@ The site is hosted on Github Pages. All the code is available in this [Github re
 ## Contact
 
 This site was created by [Mark Berthelemy](https://consulting.berthelemy.net). Mark is available for consulting engagements to help you build your own data portal using Evidence. Please get in touch if you would like to discuss.
+
+<LinkButton url='population'>
+  Next page: Global population
+</LinkButton>
