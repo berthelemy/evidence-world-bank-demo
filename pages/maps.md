@@ -15,11 +15,14 @@ select
     p.income_level as income_level,
     p.year_date as year_date,
     s.access_to_electricity as access_to_electricity,
-    s.internet_users as internet_users,
+    case
+        when s.internet_users is null then 0
+        else s.internet_users
+    end as internet_users,
     p.population as population
 from ${services} as s
 join ${population} as p on p.country_code = s.country_code and p.year_date = s.year_date
-where s.year_date = (select max(year_date) from ${services} where internet_users !=0 and access_to_electricity !=0) 
+where s.year_date = (select max(year_date) from ${services}) 
 order by s.country_name, s.year_date DESC
 ```
 
@@ -52,6 +55,24 @@ select
     population
 from ${current_country_data}
 where region like '${inputs.region_picker}'
+```
+
+```sql density
+SELECT
+    p.country_name,
+    p.country_code,
+    p.population,
+    p.region,
+    a.area,
+    p.population / a.area as population_density
+FROM restcountries.countries as a
+JOIN ${current_country_data_filtered} as p on p.country_code = a.cca2
+order by population_density desc
+```
+
+```sql density_large
+SELECT * from ${density}
+WHERE population_density < 1200
 ```
 
 Data as at <Value data={current_country_data_filtered} column=year_date />.
@@ -106,6 +127,23 @@ Data as at <Value data={current_country_data_filtered} column=year_date />.
         {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
         {id: 'internet_users', fmt: 'num', fieldClass: 'text-[grey]', valueClass: 'text-[green]'}
         
+    ]}
+/>
+
+<AreaMap 
+    data={density_large} 
+    title="Population Density (per km2)"
+    areaCol=country_code
+    geoJsonUrl='https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson'
+    geoId=iso_a2
+    value=population_density
+    valueFmt=num0k
+    height=250
+    tooltip={[
+        {id: 'country_name', fmt: 'id', showColumnName: false, valueClass: 'text-xl font-semibold'},
+        {id: 'country_code', fmt: 'id', showColumnName: false, valueClass: 'text-l font-semibold'},
+        {id: 'population', fmt: 'num2m', fieldClass: 'text-[grey]', valueClass: 'text-[green]'},
+        {id: 'population_density', title: 'Population Density (/km2)', fmt: 'num0', fieldClass: 'text-[grey]', valueClass: 'text-[green]'},
     ]}
 />
 
