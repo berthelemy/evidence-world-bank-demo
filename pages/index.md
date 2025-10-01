@@ -5,9 +5,25 @@ queries:
   - population: population.sql
 ---
 
+## About this site
 
+This is a demonstration site, illustrating how to use [Evidence](https://evidence.dev) to build data portals. The data is sourced from the [World Bank Open Data](https://data.worldbank.org/) platform.
 
+The charts connect together World Bank datasets on countries, population, access to electricity and internet users.
 
+### Technical details
+
+Evidence uses Javascript to pull data from the World Bank API using [sources](https://docs.evidence.dev/core-concepts/data-sources/) defined in the `sources` folder. The Javascript code also flattens the JSON data into a tabular format.
+
+These tables are then transformed using [queries](https://docs.evidence.dev/core-concepts/queries/), using the DuckDB dialect of SQL.
+
+Finally, the data is visualized using using Evidence's embedded visualization components on [pages](https://docs.evidence.dev/core-concepts/pages/) defined in the `pages` folder.
+
+The site is hosted on Github Pages. All the code is available in this [Github repository](https://github.com/berthelemy/evidence-world-bank-demo).
+
+### Contact
+
+This site was created by [Mark Berthelemy](https://consulting.berthelemy.net). Mark is available for consulting engagements to help you build your own data portal using Evidence. Please get in touch if you would like to discuss.
 
 ```sql total_world_population
     select 
@@ -71,6 +87,32 @@ queries:
   x=country_name
   y=population
   data={top10}
+  sortBy=y
+  sortOrder=desc
+  limit=10
+  xAxisTitle="Country"
+  yAxisTitle="Population"
+  yAxisFormat=","
+  height=400
+  />
+
+## Top 10 least populous countries in <Value data={total_world_population} value=year_date fmt="YYYY" />
+
+```sql bottom10
+    select 
+        country_name,
+        population
+    from ${population}
+    where year_date = (select max(year_date) from ${population})
+    order by population asc
+    limit 10
+```
+
+<BarChart
+  title="Top 10 Most Populous Countries"
+  x=country_name
+  y=population
+  data={bottom10}
   sortBy=y
   sortOrder=desc
   limit=10

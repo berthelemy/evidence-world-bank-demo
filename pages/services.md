@@ -13,7 +13,7 @@ They show, for each country and year, the percentage of the population with acce
 
 The chart below shows the average access to electricity and internet users as a percentage of each country's population over time.
 
-There are some obvious discrepancies, probably due to missing data in the World Bank dataset.
+There are some obvious discrepancies towards the beginning and end of the timeline, probably due to missing data in the World Bank dataset.
 
 ```sql summary_by_year
 select 

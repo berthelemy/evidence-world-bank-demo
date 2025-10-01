@@ -5,6 +5,7 @@ queries:
   - population: population.sql
 ---
 
+Click on the chart legend items to toggle visibility of each item.
 
 ```sql aggregate_by_year
 select 

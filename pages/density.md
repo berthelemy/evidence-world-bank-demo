@@ -30,6 +30,8 @@ Small countries like Monaco and Singapore have very high population densities, w
 
 ### Large countries
 
+This map is provided by [Natural Earth](https://www.naturalearthdata.com/). It excludes tiny countries like Monaco and Singapore.
+
 ```sql density_large
 SELECT * from ${density}
 WHERE population_density < 1200
@@ -53,6 +55,8 @@ WHERE population_density < 1200
 />
 
 ### Tiny countries
+
+This separate map shows just the tiny countries, which are excluded from the main map above.
 
 <AreaMap 
     data={density} 

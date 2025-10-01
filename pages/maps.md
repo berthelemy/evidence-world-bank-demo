@@ -1,5 +1,5 @@
 ---
-title: Maps
+title: Comparison Maps
 sidebar_position: 5
 hide_toc: true
 queries:
@@ -28,6 +28,8 @@ order by s.country_name, s.year_date DESC
     from ${current_country_data}
     order by region
 ```
+
+Select a region for a more detailed view.
 
 <ButtonGroup 
     data={regions} 
